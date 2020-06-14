@@ -7,3 +7,6 @@ class RandomModel:
 
     def train(self, *args):
         pass
+
+    def train_on_data(self, xs, ys):
+        pass

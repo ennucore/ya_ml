@@ -18,3 +18,6 @@ class Perceptron:
 
     def predict(self, x):
         return round(sum(x[i] * self.weights[i] for i in range(5)))
+
+    def train_on_data(self, xs, ys):
+        [[self.train(x, y) for x, y in zip(xs, ys)] for _epoch in range(self.epochs)]

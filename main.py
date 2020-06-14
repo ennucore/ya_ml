@@ -48,25 +48,39 @@ def get_test_data():
     return xs[3 * len(xs) // 4:], ys[3 * len(xs) // 4:]
 
 
+def get_final_test_data():
+    header, all_data = read_file('data/test.csv')
+    ids = [row[0] for row in all_data]
+    return get_x_data(all_data, header), ids
+
+
 def test_model(model, x_data, y_data):
     return sum(model.predict(input_data) == right_answer
                for input_data, right_answer in zip(x_data, y_data)) / len(x_data)
 
 
 def train_model(model, x_data, y_data):
-    [[model.train(x, y) for x, y in zip(x_data, y_data)] for _epoch in range(getattr(model, 'epochs', 1))]
+    model.train_on_data(x_data, y_data)
 
 
 def train_and_test_model(model_cls):
     model = model_cls()
     train_model(model, *train_data)
     print(f'Result for {model_cls.__name__}: {test_model(model, *test_data)}')
+    model = model_cls()
+    train_model(model, train_data[0] + test_data[0], train_data[1] + test_data[1])
+    with open(f'data/answer_{model_cls.__name__.lower()}.csv', 'w') as f:
+        f.write('PassengerId,Survived\n')
+        for x, passenger_id in zip(final_test_data, ids):
+            f.write(f'{passenger_id},{int(model.predict(x))}\n')
     return model
 
 
 train_data, test_data = get_train_data(), get_test_data()
+final_test_data, ids = get_final_test_data()
 normalize(train_data[0])
 normalize(test_data[0])
+normalize(final_test_data)
 train_and_test_model(RandomModel)
 perceptron = train_and_test_model(Perceptron)
 # print('Perceptron weights:', perceptron.weights)
