@@ -11,8 +11,11 @@ class LinearModel:
         self.ks, self.b = [random.uniform(-1, 1) for _ in range(5)], random.uniform(-1, 1)
         return self
 
+    def test_model(self, x_data, y_data):
+        return sum(self.predict(x) == y for x, y in zip(x_data, y_data)) / len(y_data)
+
     def predict(self, x):
-        return int(sum(self.ks[i] * x[i] for i in range(5)) + self.b > 0)
+        return int(sum(self.ks[i] * x[i] for i in range(len(self.ks))) + self.b > 0)
 
     def mutate(self):
         for i in range(len(self.ks)):

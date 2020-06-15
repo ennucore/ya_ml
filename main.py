@@ -5,6 +5,7 @@ from random_model import RandomModel
 from perceptron_model import Perceptron
 from knn import KNNModel
 from genetic import Genetic
+from bruteforce import BruteforceModel
 
 
 def read_file(filename):
@@ -87,3 +88,4 @@ perceptron = train_and_test_model(Perceptron)
 # print('Perceptron weights:', perceptron.weights)
 train_and_test_model(KNNModel)
 train_and_test_model(Genetic)
+train_and_test_model(BruteforceModel)

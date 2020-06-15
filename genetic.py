@@ -15,15 +15,13 @@ class Genetic:
         self.models = [LinearModel.random() for _ in range(n)]
         self.chosen_model = None
 
-    def test_model(self, model, x_data, y_data):
-        return sum(model.predict(x) == y for x, y in zip(x_data, y_data)) / len(y_data)
 
     def predict(self, x):
         return self.chosen_model.predict(x)
 
     def train_on_data(self, xs, ys):
         for _epoch in range(80):
-            self.models = sorted(self.models, key=lambda model: -self.test_model(model, xs, ys))
+            self.models = sorted(self.models, key=lambda model: -model.test_model(xs, ys))
             n = len(self.models)
             self.models = self.models[:n // 2]
             old_models = self.models.copy()
