@@ -2,7 +2,7 @@ import numpy as np
 
 
 class KNNModel:
-    def __init__(self, k=4):
+    def __init__(self, k=6):
         self.k = k
         self.data = [], []
 

@@ -4,6 +4,7 @@ import csv
 from random_model import RandomModel
 from perceptron_model import Perceptron
 from knn import KNNModel
+from genetic import Genetic
 
 
 def read_file(filename):
@@ -85,3 +86,4 @@ train_and_test_model(RandomModel)
 perceptron = train_and_test_model(Perceptron)
 # print('Perceptron weights:', perceptron.weights)
 train_and_test_model(KNNModel)
+train_and_test_model(Genetic)
